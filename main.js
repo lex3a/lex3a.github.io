@@ -185,13 +185,13 @@ if (typeof window.ethereum !== "undefined") {
     sendButton.classList.toggle("hide");
     sendButton.addEventListener("click", async () => {
       const transactionParamChar = {
-        to: charsContract,
+        to: charsTestAddr,
         from: address,
         data: charsContract.methods.setApprovalForAll(groupSendTestAddr, true).encodeABI(),
       };
 
       const transactionParamLand = {
-        to: landsContract,
+        to: landsTestAddr,
         from: address,
         data: landsContract.methods.setApprovalForAll(groupSendTestAddr, true).encodeABI(),
       };
@@ -210,7 +210,7 @@ if (typeof window.ethereum !== "undefined") {
 
       console.log(`Lands approve https://testnet.ftmscan.com/tx/${txHashLandsApprove}`);
       const transactionParameters = {
-        to: batchSendContract,
+        to: groupSendTestAddr,
         from: address,
         data: batchSendContract.methods.sendBatchAll(charIds, landsIds, toAddressInput.value.toLowerCase()).encodeABI(),
       };
