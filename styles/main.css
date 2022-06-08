@@ -1,0 +1,128 @@
+@font-face {
+  font-family: "Furore";
+  src: url("../fonts/Furore.otf") format("opentype");
+}
+
+.furore {
+  font-family: "Furore", sans-serif;
+}
+.orangeBg {
+  background-color: #f1b70c;
+}
+.orangeText {
+  color: #f1b70c;
+}
+.smooth {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.6, 1.8);
+}
+.ease-in-out {
+  transition: all 0.24s ease-in-out;
+}
+.btn-hover {
+  transition: all 0.2s ease-in-out;
+}
+.btn-hover:hover {
+  filter: brightness(1.2);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.modal-enter-active,
+.modal-leave-active {
+  transition: 0.3s;
+}
+.modal-enter,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.tooltip-enter-active,
+.tooltip-leave-active {
+  transition: 0.3s;
+  transform: translateY(0);
+}
+.tooltip-enter,
+.tooltip-leave-to {
+  opacity: 0;
+  transform: translateY(5vh);
+}
+.glass-dark {
+  background: rgba(55, 55, 55, 0.5);
+}
+.glass-dark,
+.glass-light {
+  box-shadow: 10px 10px 35px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+}
+.glass-light {
+  background: rgba(55, 55, 55, 0.2);
+  border: 0.5px solid hsla(0, 0%, 100%, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: url("../background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.main {
+  margin-top: 20px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: #ffca28;
+}
+
+.btn {
+  margin-top: 20px;
+  display: inline-block;
+  border: 1px solid #f1b70c;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #f1b70c;
+  transition: color 0.5s;
+}
+
+.label {
+  margin-top: 20px;
+  color: #ffca28;
+}
+
+.tokenIds {
+  margin-top: 20px;
+  display: inline-block;
+  border: 1px solid #f1b70c;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #f1b70c;
+  transition: color 0.5s;
+  color: rgba(0, 0, 0, 0.564);
+}
+
+.btn:hover {
+  background-color: #fed65c;
+}
+
+.hide {
+  display: none;
+}

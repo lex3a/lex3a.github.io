@@ -1,8 +1,31 @@
 <!DOCTYPE html>
-<html>
-<body>
-
-<h1>Well, it works!</h1>
-
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <title>CC Sender</title>
+  </head>
+  <body>
+    <main class="main furore">
+      <h1 class="title">Send your CC NFTs</h1>
+      <button class="btn" id="mm-btn">Connect Metamask</button>
+      <p class="label">Charater TokenIds:</p>
+      <input class="tokenIds" type="text" name="chars" id="charTokens" />
+      <p class="label">City Block TokenIds:</p>
+      <input class="tokenIds" type="text" name="chars" id="landsTokens" />
+      <p class="label">To Address:</p>
+      <input class="tokenIds" type="text" name="chars" id="addressTo" />
+      <button class="btn hide" id="send-btn">Send Data</button>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js"
+      integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./abis.js"></script>
+    <script src="./main.js"></script>
+  </body>
 </html>
