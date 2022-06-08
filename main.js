@@ -179,6 +179,7 @@ if (typeof window.ethereum !== "undefined") {
     if (status === "OK") ethereumButton.innerText = `Connected ${address}`;
     let charIds = await getOwnerTokenIds(address, charsContract);
     let landsIds = await getOwnerTokenIds(address, landsContract);
+
     charTokensInput.value = charIds;
     landTokensInput.value = landsIds;
 
