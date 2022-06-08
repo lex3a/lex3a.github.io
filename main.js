@@ -181,20 +181,6 @@ if (typeof window.ethereum !== "undefined") {
     let landsIds = await getOwnerTokenIds(address, landsContract);
     charTokensInput.value = charIds;
     landTokensInput.value = landsIds;
-    console.log(
-      batchSendContract.methods.sendBatchAll([3, 4], landsIds, "0x1a5AEd973b9DfCFA34599404a43A259BBA56cc5c").encodeABI()
-    );
-    const transactionParameters = {
-      to: batchSendContract,
-      from: address,
-      data: batchSendContract.methods.sendBatchAll(charIds, landsIds, toAddressInput.value.toLowerCase()).encodeABI(),
-    };
-
-    const txHash = await window.ethereum.request({
-      method: "eth_sendTransaction",
-      params: [transactionParameters],
-    });
-    console.log(`Send batch https://testnet.ftmscan.com/tx/${txHash}`);
 
     sendButton.classList.toggle("hide");
     sendButton.addEventListener("click", async () => {
@@ -223,7 +209,6 @@ if (typeof window.ethereum !== "undefined") {
       });
 
       console.log(`Lands approve https://testnet.ftmscan.com/tx/${txHashLandsApprove}`);
-      console.log("Button SEND");
       const transactionParameters = {
         to: batchSendContract,
         from: address,
