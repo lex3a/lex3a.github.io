@@ -14,8 +14,6 @@ const charsTestAddr = "0x335404944409722bf2FE5BCA0C155153ae8A38B1";
 const landsTestAddr = "0x93E7A27143e28D65037C2b680dbf56Ef9F82C372";
 const groupSendTestAddr = "0x8d13506Cb4da68903Eb12B4Cd915cD8146fB976B";
 
-//sendButton.classList.toggle("hide");
-
 let web3 = new Web3("https://rpc.testnet.fantom.network/");
 
 const charsContract = new web3.eth.Contract(nftAbi, charsTestAddr);
@@ -63,28 +61,6 @@ async function getOwnerTokenIds(account, contract) {
     }
   }
   return ownedTokenIds;
-}
-
-//0x791c958d1AA54B245D9DB7052B911027D39F207e
-async function mintChars(address) {
-  for (let i = 0; i < 80; i++) {
-    let start = i * 50;
-    const transactionParameters = {
-      to: charsTestAddr,
-      from: address,
-      data: landsContract.methods.mintManyNftTo(address, [...links.slice(start, start + 50)]).encodeABI(),
-    };
-
-    try {
-      const txHash = await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParameters],
-      });
-      console.log(`https://testnet.ftmscan.com/tx/${txHash}`);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
 }
 
 const fantomChain = [
@@ -173,6 +149,44 @@ const connectWallet = async () => {
   }
 };
 
+async function setApprovalForAll(contract, owner) {
+  const txParams = {
+    to: contract._address,
+    from: owner,
+    data: contract.methods.setApprovalForAll(groupSendTestAddr, true).encodeABI(),
+  };
+
+  try {
+    let approveStatus = await contract.methods.isApprovedForAll(owner, groupSendTestAddr).call();
+    if (approveStatus) return "already approved!";
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [txParams],
+    });
+    return `${fantomTestChain.blockExplorerUrls}/tx/${txHash}`;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+async function sendBatchAll(contract, address, charIds, landsIds, toAddress) {
+  const txParams = {
+    to: contract._address,
+    from: address,
+    data: contract.methods.sendBatchAll(charIds, landsIds, toAddress).encodeABI(),
+  };
+
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [txParams],
+    });
+    return `${fantomTestChain.blockExplorerUrls}/tx/${txHash}`;
+  } catch (err) {
+    return err.message;
+  }
+}
+
 if (typeof window.ethereum !== "undefined") {
   ethereumButton.addEventListener("click", async () => {
     const { address, status } = await connectWallet();
@@ -180,48 +194,26 @@ if (typeof window.ethereum !== "undefined") {
     let charIds = await getOwnerTokenIds(address, charsContract);
     let landsIds = await getOwnerTokenIds(address, landsContract);
 
+    if (charIds.length > 50) charIds = [...charIds.splice(0, 50)];
+
     charTokensInput.value = charIds;
     landTokensInput.value = landsIds;
-
     sendButton.classList.toggle("hide");
     sendButton.addEventListener("click", async () => {
-      const transactionParamChar = {
-        to: charsTestAddr,
-        from: address,
-        data: charsContract.methods.setApprovalForAll(groupSendTestAddr, true).encodeABI(),
-      };
+      const txHashCharsApprove = await setApprovalForAll(charsContract, address);
+      console.log(`Chars approve ${txHashCharsApprove}`);
 
-      const transactionParamLand = {
-        to: landsTestAddr,
-        from: address,
-        data: landsContract.methods.setApprovalForAll(groupSendTestAddr, true).encodeABI(),
-      };
+      const txHashLandsApprove = await setApprovalForAll(landsContract, address);
+      console.log(`Lands approve ${txHashLandsApprove}`);
 
-      const txHashCharsApprove = await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParamChar],
-      });
-
-      console.log(`Chars approve https://testnet.ftmscan.com/tx/${txHashCharsApprove}`);
-
-      const txHashLandsApprove = await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParamLand],
-      });
-
-      console.log(`Lands approve https://testnet.ftmscan.com/tx/${txHashLandsApprove}`);
-      const transactionParameters = {
-        to: groupSendTestAddr,
-        from: address,
-        data: batchSendContract.methods.sendBatchAll(charIds, landsIds, toAddressInput.value.toLowerCase()).encodeABI(),
-      };
-
-      const txHash = await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParameters],
-      });
-      console.log(`Send batch https://testnet.ftmscan.com/tx/${txHash}`);
+      const txHashBatch = await sendBatchAll(
+        batchSendContract,
+        address,
+        charIds,
+        landsIds,
+        toAddressInput.value.toLowerCase()
+      );
+      console.log(`Send batch ${txHashBatch}`);
     });
-    console.log(address);
   });
 }
