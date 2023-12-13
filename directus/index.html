@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./directus.css" />
+    <title>CC Sender</title>
+</head>
+<script src="./directus.js" defer></script>
+<body>
+<main>
+    <select name="languages" id="languages">
+        <option value="shell">Shell</option>
+        <option value="docker">Docker</option>
+        <option value="go">Go</option>
+        <option value="html">HTML</option>
+        <option value="http">HTTP</option>
+        <option value="java">Java</option>
+        <option value="javascript">JavaScript</option>
+        <option value="php">PHP</option>
+        <option value="python">Python</option>
+        <option value="sql">SQL</option>
+        <option value="yaml">YAML</option>
+        <option value="bash">Bash</option>
+        <option value="typescript">TypeScript</option>
+    </select>
+    <textarea id="from"></textarea>
+    <textarea id="to"></textarea>
+    <button id="transform" onclick="onTranslate()">Transform</button>
+</main>
+</body>
+</html>
