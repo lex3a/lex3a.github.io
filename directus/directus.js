@@ -9,4 +9,7 @@ function convertToDirectusCode(text, type) {
 
 function onTranslate() {
     convertToDirectusCode(from.value, language.value);
+    to.select();
+    to.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(to.value);
 }
