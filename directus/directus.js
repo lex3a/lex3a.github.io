@@ -3,8 +3,13 @@ const to = document.getElementById('to');
 const language = document.getElementById('languages');
 const transform = document.getElementById('transform');
 
+function sanitizeHTML(text) {
+    return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function convertToDirectusCode(text, type) {
-    to.value = `<pre><code class=${type}>${text}</code></pre>`
+    const sanitizedText = sanitizeHTML(text);
+    to.value = `<pre><code class=${type}>${sanitizedText}</code></pre>`
 }
 
 async function onTranslate() {
